@@ -1,0 +1,140 @@
+<?php
+$stucard_data = explode(',', $_GET['stucard_data']);
+$stucard_handle = $stucard_data[0];
+$stucard_status = $stucard_data[1];
+$stucard_sum = $stucard_data[2];
+$openid = $stucard_data[3];
+if ($stucard_handle == "false") {
+	$stucard_handle = '尚未办理';
+}else{
+	$stucard_handle = '已经办理';
+}
+switch ($stucard_status) {
+	case 'normal':
+		$stucard_status = '正常';
+		break;
+	case 'loss':
+		$stucard_status = '挂失';
+		break;
+	default:
+		$stucard_status = '未知';
+		break;
+}
+//appid
+$appid = "wxbcfa6f6a2b9e8c58";
+//appsecret
+$appsecret = "937c1f53d627c689b6f14223c1d02b1e";
+//获取token
+$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret";
+$output = https_request($url);
+$jsoninfo = json_decode($output, true);
+$access_token = $jsoninfo["access_token"];
+//临时二维码
+$qrcode = '{
+    "expire_seconds": 604800, 
+    "action_name": "QR_STR_SCENE", 
+    "action_info": {
+        "scene": {
+            "scene_str": "qrname:一卡通办理,openid:'.$openid.',stucard_handle:'.$stucard_handle.',stucard_status:'.$stucard_status.',stucard_sum:'.$stucard_sum.'"
+        }
+    }
+}';
+//永久二维码
+//$qrcode = '{ "action_name":"QR_LIMIT_STR_SCENE", "action_info":{"scene":{"scene_str":test}}}';
+$url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=$access_token";
+$result = https_request($url, $qrcode);
+$jsoninfo = json_decode($result, true);
+$ticket = $jsoninfo["ticket"];
+//二维码url
+$qrcodeurl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=$ticket";
+
+function https_request($url, $data = null){
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+    if(!empty($data)){
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    }
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    $output = curl_exec($curl);
+    curl_close($curl);
+    return $output;
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+	<title>自助报道</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/weui.css"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/example.css"/>
+</head>
+<body ontouchstart>
+<article class="weui-article">
+    <h1>在线申请一卡通</h1>
+    <p>
+        请在确认缴费状态为已经缴费后，点击确认在下方生成二维码（有效期为七天），保存并将二维码出示在学生卡写磁机二维码扫描处完成学生卡一卡通的申请。在公众号获取支付权限后还将上线一卡通充值服务，敬请期待。
+     </p>
+</article>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">办理状态</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" id="stucard_handle" name="stucard_handle" type="text" value="<?php echo $stucard_handle;?>" readonly="readonly" style="color:#CCCCCC">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">一卡通状态</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" id="stucard_status" type="text" value="<?php echo $stucard_status;?>" readonly="readonly" style="color:#CCCCCC">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">一卡通余额</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" id="stucard_sum" type="text" value="<?php echo $stucard_sum;?>" readonly="readonly" style="color:#CCCCCC">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form" style="display: none;">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">openid</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="openid" value="<?php echo $openid;?>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<a onclick="qrimg();" class="weui-btn weui-btn_block weui-btn_primary">确认</a>
+	</div>
+<article class="weui-article">
+            <section>
+                <section>
+                    <p>
+                        <img src="<?php echo $qrcodeurl;?>" id="qr" style="display: none;">
+                    </p>
+                </section>
+            </section>
+</article>
+<script type="text/javascript">
+	function qrimg() {
+		if (document.getElementById('stucard_handle').value == "尚未办理") {
+		document.getElementById('qr').style.display='block';
+	}else{
+		location.href="http://2.xhbgzh.applinzi.com/xhbgzh/index.php/Home/Index/stu_card"; 
+	}
+	if (document.getElementById('stucard_status').value == "挂失") {
+		document.getElementById('qr').style.display='block';
+	}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>修改数据</h1>
+<form action="__URL__/info_update" method="POST">
+	<h1>info</h1>
+    <volist name="infodataupdate" id="vo">
+    <h2>openid：<input type="text" name="info_openid" value="<{$vo.openid}>"></h2>
+    <h2>id_card：<input type="text" name="info_id_card" value="<{$vo.id_card}>"></h2>
+    <h2>adm_time：<input type="text" name="info_adm_time" value="<{$vo.adm_time}>"></h2>
+    <h2>dep_number：<input type="text" name="info_dep_number" value="<{$vo.dep_number}>"></h2>
+    <h2>maj_number：<input type="text" name="info_maj_number" value="<{$vo.maj_number}>"></h2>
+    <h2>stu_number：<input type="text" name="info_stu_number" value="<{$vo.stu_number}>"></h2>
+    <h2>stu_name：<input type="text" name="info_stu_name" value="<{$vo.stu_name}>"></h2>
+    <h2>stu_sex：<input type="text" name="info_stu_sex" value="<{$vo.stu_sex}>"></h2>
+    <h2>stu_class：<input type="text" name="info_stu_class" value="<{$vo.stu_class}>"></h2>
+    <h2>stu_dep：<input type="text" name="info_stu_dep" value="<{$vo.stu_dep}>"></h2>
+    <h2>stu_maj：<input type="text" name="info_stu_maj" value="<{$vo.stu_maj}>"></h2>
+    <h2>stu_room：<input type="text" name="info_stu_room" value="<{$vo.stu_room}>"></h2>
+    <h2>apl_status：<input type="text" name="info_apl_status" value="<{$vo.apl_status}>"></h2>
+    </volist>
+    <input type="text" name="table" value="info" style="display: none;">
+    <input type="submit" name="update" value="提交修改">
+</form>
+<form action="__URL__/login_update" method="POST">
+    <h1>login</h1>
+    <volist name="logindataupdate" id="vo">
+    <h2>openid：<input type="text" name="login_openid" value="<{$vo.openid}>"></h2>
+    <h2>id_card：<input type="text" name="login_id_card" value="<{$vo.id_card}>"></h2>
+	</volist>
+    <input type="text" name="table" value="login" style="display: none;">
+	<input type="submit" name="update" value="提交修改">
+</form>
+<form action="__URL__/selfhelp_update" method="POST">
+    <h1>selfhelp</h1>
+    <volist name="selfhelpdataupdate" id="vo">
+    <h2>openid：<input type="text" name="selfhelp_openid" value="<{$vo.openid}>"></h2>
+    <h2>id_card：<input type="text" name="selfhelp_id_card" value="<{$vo.id_card}>"></h2>
+    <h2>tuition_status：<input type="text" name="selfhelp_tuition_status" value="<{$vo.tuition_status}>"></h2>
+    <h2>tuition_sum：<input type="text" name="selfhelp_tuition_sum" value="<{$vo.tuition_sum}>"></h2>
+    <h2>stucard_handle：<input type="text" name="selfhelp_stucard_handle" value="<{$vo.stucard_handle}>"></h2>
+    <h2>stucard_status：<input type="text" name="selfhelp_stucard_status" value="<{$vo.stucard_status}>"></h2>
+    <h2>stucard_sum：<input type="text" name="selfhelp_stucard_sum" value="<{$vo.stucard_sum}>"></h2>
+    <h2>junfu_status：<input type="text" name="selfhelp_junfu_status" value="<{$vo.junfu_status}>"></h2>
+    <h2>junfu_size：<input type="text" name="selfhelp_junfu_size" value="<{$vo.junfu_size}>"></h2>
+    <h2>junxie_size：<input type="text" name="selfhelp_junxie_size" value="<{$vo.junxie_size}>"></h2>
+	</volist>
+    <input type="text" name="table" value="selfhelp" style="display: none;">
+    <input type="submit" name="update" value="提交修改">
+</form>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<?php
+$getinfodata = explode(',', $_GET['getinfodata']);
+$stu_name = $getinfodata[0];
+$stu_sex = $getinfodata[1];
+$stu_dep = $getinfodata[2];
+$stu_maj = $getinfodata[3];
+$openid = $getinfodata[4];
+$apl_status = $getinfodata[5];
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+	<title>自助报道</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/weui.css"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/example.css"/>
+</head>
+<body ontouchstart>
+<article class="weui-article">
+    <h1>绑定个人信息</h1>
+    <p>
+        请认真填写个人信息，填写完毕后可在自助报道菜单打印报道单处查看并核对个人信息。
+     </p>
+</article>
+<form action='<{:U("stu_getinfo")}>' method="POST" id="loginf">
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="stu_name" type="text" placeholder="请输入你的真实姓名" required="required" value="<?php echo $stu_name;?>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells">
+            <div class="weui-cell weui-cell_select">
+                <div class="weui-cell__bd">
+                    <select class="weui-select" name="stu_sex" id="stu_sex">
+                        <option selected="" value="1">性别&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp男</option>
+                        <option value="2">性别&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp女</option>
+                    </select>
+                </div>
+            </div>
+    </div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">系别</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="stu_dep" type="text" placeholder="请输入XX系别（全称）" required="required" value="<?php echo $stu_dep;?>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">专业</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="stu_maj" type="text" placeholder="请输入XX专业（全称）" required="required" value="<?php echo $stu_maj;?>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form" style="display: none;">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">openid</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="openid" value="<?php echo $openid;?>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<input class="weui-btn weui-btn_block weui-btn_primary" type="submit" value="提交" style="width: 100%">
+	</div>
+</form>
+<script type="text/javascript">
+	var stu_sex = "<?php echo $stu_sex?>";
+	switch(stu_sex){
+		case "1":
+			var select = document.getElementById("stu_sex");
+	    	select.options[0].selected = true;//改变选中项
+		break;
+		case "2":
+			var select = document.getElementById("stu_sex");
+	    	select.options[1].selected = true;//改变选中项
+		break;
+	}
+	var apl_status = "<?php echo $apl_status?>";
+	switch(apl_status) {
+     case 'true':
+        document.getElementById("sb").style.display = 'none';
+        alert("您的资料已审核通过，请到打印报告单处查看详情")
+        break;
+     case 'false':
+        document.getElementById("sb").style.display = 'display';
+        break;
+	}
+</script>
+</body>
+</html>

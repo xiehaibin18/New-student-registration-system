@@ -1,0 +1,12 @@
+[ 2018-05-21T09:02:42+08:00 ] ::1 /lab08/index.php/herbin/Home/Index/DataShow
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000024s ]
+INFO: [ app_init ] --END-- [ RunTime:0.011753s ]
+ERR: 无法加载模块:Herbin
+
+[ 2018-05-21T09:02:52+08:00 ] ::1 /lab08/Index.php/herbin/Home/Index/DataShow
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000369s ]
+ERR: 无法加载模块:Herbin
+

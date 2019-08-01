@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/data.css">
+</head>
+<body>
+<fieldset>
+    <form action='<{:U("DataShow")}>' method="POST">
+    <span>排序</span>
+        <select name="order">
+            <option value="id">请选择关键字</option>
+            <option value="id">id</option>
+            <option value="title">title</option>
+            <option value="content">content</option>
+            <option value="auther">auther</option>
+            <option value="time">time</option>
+        </select>
+        <input type="submit" name="ordersubmit" value="排序">
+    </form>
+</fieldset>
+<fieldset>
+    <form action='<{:U("DataShow")}>' method="POST">
+        <span>查询</span>
+        <select name="found">
+            <option value="">请选择关键字</option>
+            <option value="id">id</option>
+            <option value="title">title</option>
+            <option value="content">content</option>
+            <option value="auther">auther</option>
+            <option value="time">time</option>
+        </select>
+        <input type="text" name="foundtext">
+        <input type="submit" name="foundsubmit" value="查询">
+        <span>其他表</span>
+        <select name="table">
+            <option value="info">info</option>
+            <option value="login">login</option>
+            <option value="selfhelp">selfhelp</option>
+            <option value="admin">all</option>
+        </select>
+        <input type="submit" name="tablesubmit" value="查询">
+    </form>
+</fieldset>
+<table border="1">
+    <tr>
+            <td>openid</td>
+            <td>id_card</td>
+            <td>adm_time</td>
+            <td>dep_number</td>
+            <td>maj_number</td>
+            <td>stu_number</td>
+            <td>stu_name</td>
+            <td>stu_sex</td>
+            <td>stu_class</td>
+            <td>stu_dep</td>
+            <td>stu_maj</td>
+            <td>stu_room</td>
+            <td>apl_status</td>
+    </tr>
+    <volist name="info" id="vo">
+        <tr>
+            <td><{$vo.openid}></td>
+            <td><{$vo.id_card}></td>
+            <td><{$vo.adm_time}></td>
+            <td><{$vo.dep_number}></td>
+            <td><{$vo.maj_number}></td>
+            <td><{$vo.stu_number}></td>
+            <td><{$vo.stu_name}></td>
+            <td><{$vo.stu_sex}></td>
+            <td><{$vo.stu_class}></td>
+            <td><{$vo.stu_dep}></td>
+            <td><{$vo.stu_maj}></td>
+            <td><{$vo.stu_room}></td>
+            <td><{$vo.apl_status}></td>
+            <td><a href="__URL__/del?info=<{$vo.id_card}>">删除</a></td>
+            <td><a href="__URL__/DataUpdate?info=<{$vo.id_card}>">修改</a></td>
+        </tr>
+    </volist>
+</table>
+<p>
+    <{$infopage}>
+</p>
+<table border="1">
+        <tr>
+            <td>openid</td>
+            <td>id_card</td>
+        </tr>
+        <volist name="login" id="vo">
+        <tr>
+            <td><{$vo.openid}></td>
+            <td><{$vo.id_card}></td>
+            <td><a href="__URL__/del?login=<{$vo.id_card}>">删除</a></td>
+            <td><a href="__URL__/DataUpdate?login=<{$vo.id_card}>">修改</a></td>
+        </tr>
+        </volist>
+</table>
+<p>
+    <{$loginpage}>
+</p>
+<table border="1">
+        <tr>
+            <td>openid</td>
+            <td>id_card</td>
+            <td>tuition_status</td>
+            <td>tuition_sum</td>
+            <td>stucard_handle</td>
+            <td>stucard_status</td>
+            <td>stucard_sum</td>
+            <td>junfu_status</td>
+            <td>junfu_size</td>
+            <td>junxie_size</td>
+        </tr>
+        <volist name="selfhelp" id="vo">
+        <tr>
+            <td><{$vo.openid}></td>
+            <td><{$vo.id_card}></td>
+            <td><{$vo.tuition_status}></td>
+            <td><{$vo.tuition_sum}></td>
+            <td><{$vo.stucard_handle}></td>
+            <td><{$vo.stucard_status}></td>
+            <td><{$vo.stucard_sum}></td>
+            <td><{$vo.junfu_status}></td>
+            <td><{$vo.junfu_size}></td>
+            <td><{$vo.junxie_size}></td>
+            <td><a href="__URL__/del?selfhelp=<{$vo.id_card}>">删除</a></td>
+            <td><a href="__URL__/DataUpdate?selfhelp=<{$vo.id_card}>">修改</a></td>
+        </tr>
+    </volist>
+</table>
+<p>
+    <{$selfhelppage}>
+</p>
+</body>
+</html>

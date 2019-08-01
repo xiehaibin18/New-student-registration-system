@@ -1,0 +1,117 @@
+<?php
+$tuition = explode(',', $_GET['tuition_sum']);
+$tuition_sum = $tuition[0];
+$tuition_status = $tuition[1];
+$openid = $tuition[2];
+if ($tuition_status == "false") {
+	$tuition_status = '尚未缴费';
+}else{
+	$tuition_status = '已经缴费';
+}
+//appid
+$appid = "wxbcfa6f6a2b9e8c58";
+//appsecret
+$appsecret = "937c1f53d627c689b6f14223c1d02b1e";
+//获取token
+$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret";
+$output = https_request($url);
+$jsoninfo = json_decode($output, true);
+$access_token = $jsoninfo["access_token"];
+//临时二维码
+$qrcode = '{
+    "expire_seconds": 604800, 
+    "action_name": "QR_STR_SCENE", 
+    "action_info": {
+        "scene": {
+            "scene_str": "qrname:学费缴纳,openid:'.$openid.',tuition_sum:'.$tuition_sum.',tuition_status:'.$tuition_status.'"
+        }
+    }
+}';
+//永久二维码
+//$qrcode = '{ "action_name":"QR_LIMIT_STR_SCENE", "action_info":{"scene":{"scene_str":test}}}';
+$url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=$access_token";
+$result = https_request($url, $qrcode);
+$jsoninfo = json_decode($result, true);
+$ticket = $jsoninfo["ticket"];
+//二维码url
+$qrcodeurl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=$ticket";
+
+function https_request($url, $data = null){
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+    if(!empty($data)){
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    }
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    $output = curl_exec($curl);
+    curl_close($curl);
+    return $output;
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+	<title>自助报道</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/weui.css"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/example.css"/>
+</head>
+<body ontouchstart>
+<article class="weui-article">
+    <h1>缴纳学费</h1>
+    <p>
+        请在确认缴费金额与缴费状态为尚未缴费后，点击确认在下方生成二维码（有效期为七天），保存并将二维码出示在自助缴费机二维码扫描处完成学费缴纳。
+     </p>
+</article>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">总计</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="stu_name" type="text" value="<?php echo $tuition_sum;?>" readonly="readonly" style="color:#CCCCCC">
+			</div>
+		</div>
+	</div>
+		<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">缴费状态</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" id="tuition_status" type="text" value="<?php echo $tuition_status;?>" readonly="readonly" style="color:#CCCCCC">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form" style="display: none;">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">openid</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="openid" value="<?php echo $openid;?>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<a onclick="qrimg();" class="weui-btn weui-btn_block weui-btn_primary">确认</a>
+	</div>
+<article class="weui-article">
+            <section>
+                <section>
+                    <p>
+                        <img src="<?php echo $qrcodeurl;?>" id="qr" style="display: none;">
+                    </p>
+                </section>
+            </section>
+</article>
+<script type="text/javascript">
+	function qrimg() {
+		if (document.getElementById('tuition_status').value == "尚未缴费") {
+		document.getElementById('qr').style.display='block';
+	}else{
+		location.href="http://2.xhbgzh.applinzi.com/xhbgzh/index.php/Home/Index/stu_tuition.html"; 
+	}
+}
+</script>
+</body>
+</html>

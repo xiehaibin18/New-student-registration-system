@@ -1,0 +1,6 @@
+[ 2018-05-20T23:59:45+08:00 ] ::1 /lab08/Index.php/Home/DataShow
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.013969s ]
+ERR: 无法加载控制器:DataShow
+

@@ -1,0 +1,170 @@
+<?php
+$junfu_data = explode(',', $_GET['junfu_data']);
+$junfu_status = $junfu_data[0];
+$junfu_size = $junfu_data[1];
+$junxie_size = $junfu_data[2];
+$openid = $junfu_data[3];
+if ($junfu_status == "false") {
+	$junfu_status = '尚未领取';
+}else{
+	$junfu_status = '已经领取';
+}
+//appid
+$appid = "wxbcfa6f6a2b9e8c58";
+//appsecret
+$appsecret = "937c1f53d627c689b6f14223c1d02b1e";
+//获取token
+$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret";
+$output = https_request($url);
+$jsoninfo = json_decode($output, true);
+$access_token = $jsoninfo["access_token"];
+//临时二维码
+$qrcode = '{
+    "expire_seconds": 604800, 
+    "action_name": "QR_STR_SCENE", 
+    "action_info": {
+        "scene": {
+            "scene_str": "openid:'.$openid.',junfu_status:'.$junfu_status.',junfu_size:'.$junfu_size.',junxie_size:'.$junxie_size.'"
+        }
+    }
+}';
+//永久二维码
+//$qrcode = '{ "action_name":"QR_LIMIT_STR_SCENE", "action_info":{"scene":{"scene_str":test}}}';
+$url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=$access_token";
+$result = https_request($url, $qrcode);
+$jsoninfo = json_decode($result, true);
+$ticket = $jsoninfo["ticket"];
+//二维码url
+$qrcodeurl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=$ticket";
+
+function https_request($url, $data = null){
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+    if(!empty($data)){
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    }
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    $output = curl_exec($curl);
+    curl_close($curl);
+    return $output;
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+	<title>自助报道</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/weui.css"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/example.css"/>
+</head>
+<body ontouchstart>
+<article class="weui-article">
+    <h1>军服申请</h1>
+    <p>
+        请在填写完信息后重新打开此页面获取二维码到军服领取点（东门广场）出示二维码领取军服。注：二次修改尺码需要联系谢海滨老师（137****6692）请谨慎选择
+     </p>
+</article>
+<form action='<{:U("stu_junfu")}>' method="POST" id="junfufo">
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">军服领取状态</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="junfu_status" id="junfu_status" type="text"  readonly="readonly" value="<?php echo $junfu_status;?>"  style="color:#CCCCCC">
+			</div>
+		</div>
+	</div>
+	<!--  -->
+	<div class="weui-cells">
+            <div class="weui-cell weui-cell_select">
+                	<div class="weui-cell__hd"><label class="weui-label">&nbsp&nbsp&nbsp&nbsp军服码数</label></div>
+                	<div class="weui-cell__bd">
+                    <select class="weui-select" name="junfu_size" id="junfu_size">
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                    </select>
+                </div>
+            </div>
+    </div>
+<!--  -->
+	<div class="weui-cells">
+            <div class="weui-cell weui-cell_select">
+                	<div class="weui-cell__hd"><label class="weui-label">&nbsp&nbsp&nbsp&nbsp军鞋码数</label></div>
+                	<div class="weui-cell__bd">
+                    <select class="weui-select" name="junxie_size" id="junxie_size">
+                        <option value="42">42</option>
+                        <option value="42.5">42.5</option>
+                    </select>
+                </div>
+            </div>
+    </div>
+<!--  -->
+	<div class="weui-cells weui-cells_form" style="display: none;">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">openid</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="openid" value="<?php echo $openid;?>">
+			</div>
+		</div>
+	</div>
+	<!--  -->
+	<div class="weui-cells weui-cells_form">
+
+        <input class="weui-btn weui-btn_block weui-btn_primary" type="submit" value="提交" id="sb" style="display: block;width: 100%">
+	</div>
+</form>
+<article class="weui-article">
+            <section>
+                <section>
+                    <p>
+                        <img src="<?php echo $qrcodeurl;?>" id="qr" style="display: none;">
+                    </p>
+                </section>
+            </section>
+</article>
+<script type="text/javascript">
+
+var jfsz = "<?php echo $junfu_size?>";
+switch(jfsz){
+    case 'S':
+        var select = document.getElementById("junfu_size");
+        select.options[0].selected = true;//改变选中项
+        document.getElementById("sb").style.display = 'none';
+        document.getElementById('qr').style.display='block';
+    break;
+    case 'M':
+        var select = document.getElementById("junfu_size");
+        select.options[1].selected = true;//改变选中项
+        document.getElementById("sb").style.display = 'none';
+        document.getElementById('qr').style.display='block';
+    break;
+}
+
+var jxsz = "<?php echo $junxie_size?>";
+switch(jxsz){
+    case '42':
+        var select = document.getElementById("junxie_size");
+        select.options[0].selected = true;//改变选中项
+    break;
+    case '42.5':
+        var select = document.getElementById("junxie_size");
+        select.options[1].selected = true;//改变选中项
+    break;
+}
+var junfu_status = "<?php echo $junfu_status?>";
+    switch(junfu_status) {
+     case 'true':
+        document.getElementById("qr").style.display = 'none';
+        alert("您已经领取过军服")
+        break;
+     case 'false':
+        document.getElementById("qr").style.display = 'display';
+        break;
+    } 
+	
+</script>
+</body>
+</html>

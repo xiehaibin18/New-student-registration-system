@@ -1,0 +1,15 @@
+[ 2018-06-23T21:30:42+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000042s ]
+INFO: [ app_init ] --END-- [ RunTime:0.022195s ]
+
+[ 2018-06-23T21:31:42+08:00 ] ::1 /lab08/index.php/Home/Index/DataAdd
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000032s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000744s ]
+
+[ 2018-06-23T21:31:42+08:00 ] ::1 /lab08/index.php/Home/index/verify.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000026s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000625s ]
+

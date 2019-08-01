@@ -1,0 +1,167 @@
+<?php
+//appid
+$appid = "wxbcfa6f6a2b9e8c58";
+//appsecret
+$appsecret = "937c1f53d627c689b6f14223c1d02b1e";
+//获取token
+$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret";
+$output = https_request($url);
+$jsoninfo = json_decode($output, true);
+$access_token = $jsoninfo["access_token"];
+//临时二维码
+$qrcode = '{
+    "expire_seconds": 604800, 
+    "action_name": "QR_STR_SCENE", 
+    "action_info": {
+        "scene": {
+            "scene_str": "qrname:打印报告单,openid:'.$info[0]['openid'].',apl_status:'.$info[0]['apl_status'].'"
+        }
+    }
+}';
+//永久二维码
+//$qrcode = '{ "action_name":"QR_LIMIT_STR_SCENE", "action_info":{"scene":{"scene_str":test}}}';
+$url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=$access_token";
+$result = https_request($url, $qrcode);
+$jsoninfo = json_decode($result, true);
+$ticket = $jsoninfo["ticket"];
+//二维码url
+$qrcodeurl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=$ticket";
+
+function https_request($url, $data = null){
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+    if(!empty($data)){
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    }
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    $output = curl_exec($curl);
+    curl_close($curl);
+    return $output;
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+	<title>自助报道</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/weui.css"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/example.css"/>
+</head>
+<body ontouchstart>
+<article class="weui-article">
+    <h1>打印报道单</h1>
+    <p>
+        查看您的个人信息审核情况，在审核通过后此页面会生成二维码供您前往打印处打印报道单。
+     </p>
+</article>
+<volist name="info" id="vo">
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="stu_name" type="text" readonly="readonly" style="color:#CCCCCC" value="<{$vo.stu_name}>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">身份证号</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="id_card" type="text" readonly="readonly" style="color:#CCCCCC" value="<{$vo.id_card}>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">学号</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="stu_number_all" id="stu_number_all" type="text" readonly="readonly" style="color:#CCCCCC" value="<{$vo.adm_time}><{$vo.dep_number}><{$vo.maj_number}><{$vo.stu_number}>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">性别</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="stu_sex" id="stu_sex" type="text" readonly="readonly" style="color:#CCCCCC" value="<{$vo.stu_sex}>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">系别</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="stu_dep" id="stu_dep" type="text" readonly="readonly" style="color:#CCCCCC" value="<{$vo.stu_dep}>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">专业</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="stu_maj" id="stu_maj" type="text" readonly="readonly" style="color:#CCCCCC" value="<{$vo.stu_maj}>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">班级</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="stu_class" id="stu_class" type="text" readonly="readonly" style="color:#CCCCCC" value="<{$vo.stu_class}>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">宿舍</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="stu_room" id="stu_room" type="text" readonly="readonly" style="color:#CCCCCC" value="<{$vo.stu_room}>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">审核状态</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="apl_status" id="apl_status" type="text" readonly="readonly" style="color:#CCCCCC" value="<{$vo.apl_status}>">
+			</div>
+		</div>
+	</div>
+</volist>
+<volist name="info" id="vo">
+<form action='<{:U("stu_all")}>' method="POST" id="stu_allf">
+	<div class="weui-cells weui-cells_form" style="display: none;">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">openid</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="openid" value="<{$vo.openid}>">
+			</div>
+		</div>
+	</div>
+	<div class="weui-cells weui-cells_form">
+		<input type="submit" name="申请修改" class="weui-btn weui-btn_block weui-btn_primary" id="sb" style="display: block;">
+	</div>
+</form>
+</volist>
+<img src="<?php echo $qrcodeurl; ?>" id="qr" style="display: none;">
+<article class="weui-article">
+    <h1> </h1>
+    <p>
+         
+     </p>
+</article>
+<script type="text/javascript">
+	if (document.getElementById('apl_status').value == 'false') {
+		document.getElementById('apl_status').value = '尚未审核';
+		document.getElementById('sb').style.display = 'none';
+	}else{
+		document.getElementById('apl_status').value = '已经审核';
+		document.getElementById('qr').style.display = 'block';
+	}
+</script>
+</body>
+</html>

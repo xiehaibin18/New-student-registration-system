@@ -1,0 +1,70 @@
+<?php
+
+$code = $_GET['code'];
+getCode($code);
+function getCode($code){
+	if (!isset($code)) {
+		echo "NULL CODE";
+	}
+}
+$userinfo = getUserInfo($code);
+function getUserInfo($code){
+	$appid = "wxbcfa6f6a2b9e8c58";
+	$appsecret = "937c1f53d627c689b6f14223c1d02b1e";
+	//echo $code;
+	//获取openid
+	$access_token_url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$appsecret&code=$code&grant_type=authorization_code";
+	//echo $access_token_url;
+	$access_token_json = https_request($access_token_url);
+	$access_token_array = json_decode($access_token_json, true);
+	$openid = $access_token_array['openid'];
+	//echo $openid;
+	//获取access_token
+	$access_token = $access_token_array['access_token'];
+	//echo $access_token;
+	//获取用户个人信息
+	$userinfo_url = "https://api.weixin.qq.com/sns/userinfo?access_token=$access_token&openid=$openid&lang=zh_CN";
+	//echo $userinfo_url;
+	$userinfo_json = https_request($userinfo_url);
+	//echo $userinfo_json;
+	$userinfo_array = json_decode($userinfo_json, true);
+	//echo $userinfo_array['sex'];
+	return $userinfo_array;
+}
+function https_request($url){
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_URL, $url);
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+	curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	$data = curl_exec($curl);
+	if (curl_errno($curl)) {
+		return 'ERROR'.curl_error($curl);
+	}
+	curl_close($curl);
+	return $data;
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<a id="href" href='__URL__/chk_getinfoopenid?openid=<?php echo $userinfo["openid"];?>'></a>
+	<script type="text/javascript">
+    (function(){
+        var href = document.getElementById('href').href;
+        var interval = setInterval(function(){
+            
+                location.href = href;
+                clearInterval(interval);
+            
+        }, 1000);
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+[ 2018-05-23T09:53:32+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow/p/3.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000026s ]
+INFO: [ app_init ] --END-- [ RunTime:0.016573s ]
+
+[ 2018-05-23T09:53:38+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000026s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000362s ]
+
+[ 2018-05-23T09:53:40+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow/p/2.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000063s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000912s ]
+
+[ 2018-05-23T09:53:42+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow/p/3.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000024s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000370s ]
+
+[ 2018-05-23T09:53:45+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow/p/4.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000461s ]
+
+[ 2018-05-23T09:53:48+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow/p/1.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000029s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000475s ]
+
+[ 2018-05-23T09:53:50+08:00 ] ::1 /lab08/index.php/Home/Index/del?id=37
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000347s ]
+
+[ 2018-05-23T09:53:52+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000024s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000394s ]
+
+[ 2018-05-23T09:53:54+08:00 ] ::1 /lab08/index.php/Home/Index/del?id=38
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000399s ]
+
+[ 2018-05-23T09:53:55+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000342s ]
+
+[ 2018-05-23T09:53:56+08:00 ] ::1 /lab08/index.php/Home/Index/del?id=39
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000391s ]
+
+[ 2018-05-23T09:53:58+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000026s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000546s ]
+
+[ 2018-05-23T09:53:59+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow/p/2.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000024s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000395s ]
+
+[ 2018-05-23T09:54:03+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow/p/3.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000345s ]
+
+[ 2018-05-23T09:54:04+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow/p/4.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000024s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000400s ]
+
+[ 2018-05-23T09:54:06+08:00 ] ::1 /lab08/index.php/Home/Index/del?id=36
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000464s ]
+
+[ 2018-05-23T09:54:08+08:00 ] ::1 /lab08/index.php/Home/Index/DataShow
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000341s ]
+

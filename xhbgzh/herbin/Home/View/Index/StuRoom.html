@@ -1,0 +1,66 @@
+<?php
+$sturoom_data = explode(',', $_GET['sturoom_data']);
+$stu_room = $sturoom_data[0];
+$openid = $sturoom_data[1];
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+	<title>自助报道</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/weui.css"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/example.css"/>
+</head>
+<body ontouchstart>
+<article class="weui-article">
+    <h1>宿舍申请</h1>
+    <p>
+        完善中，如若显示宿舍已满请重试其他宿舍。。
+     </p>
+</article>
+<form action='<{:U("stu_room")}>' method="POST" id="junfufo">
+	<!--  -->
+	<div class="weui-cells">
+            <div class="weui-cell weui-cell_select">
+                	<div class="weui-cell__hd"><label class="weui-label">&nbsp&nbsp&nbsp&nbsp宿舍号</label></div>
+                	<div class="weui-cell__bd">
+                    <select class="weui-select" name="stu_room" id="stu_room">
+                        <option value="G316">G316</option>
+                        <option value="G317">G317</option>
+                    </select>
+                </div>
+            </div>
+    </div>
+<!--  -->
+	<div class="weui-cells weui-cells_form" style="display: none;">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">openid</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" name="openid" value="<?php echo $openid;?>">
+			</div>
+		</div>
+	</div>
+	<!--  -->
+	<div class="weui-cells weui-cells_form">
+        <input class="weui-btn weui-btn_block weui-btn_primary" type="submit" value="提交" id="sb"  style="width: 100%;display: block;">
+	</div>
+</form>
+<script type="text/javascript">
+
+var stu_room = "<?php echo $stu_room?>";
+switch(stu_room) {
+     case 'G316':
+        var select = document.getElementById("stu_room");
+        select.options[0].selected = true;//改变选中项
+        document.getElementById("sb").style.display = 'none';
+        break;
+     case 'G317':
+        var select = document.getElementById("stu_room");
+        select.options[1].selected = true;//改变选中项
+        document.getElementById("sb").style.display = 'none';
+        break;
+} 
+</script>
+</body>
+</html>
